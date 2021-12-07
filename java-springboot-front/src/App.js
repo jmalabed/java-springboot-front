@@ -3,35 +3,60 @@ import Dropdown from "./components/Dropdown";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [planet1, setPlanet1] = useState("");
-  const [planet2, setPlanet2] = useState("");
+  const [data, setData] = useState({
+    planet1: "",
+    planet2: "",
+    speedUnit: "",
+  });
   const planets = [
+    "Pick one!",
+    "mercury",
+    "venus",
     "earth",
     "mars",
-    "mercury",
-    "neptune",
     "jupiter",
     "saturn",
     "uranus",
-    "venus",
+    "neptune",
   ];
   const speedUnit = ["m/s", "mph", "km/s"];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted");
+  };
+
   return (
     <div className="App">
       <p>new App</p>
-      <h1>need the following:</h1>
+      <h1>Space Travel</h1>
+      <form onSubmit={handleSubmit}>
+        <p>Select a planet to start from:</p>
+        <Dropdown
+          arr={planets}
+          name={"planet1"}
+          setData={setData}
+          data={data}
+        />
 
-      <p>planet1 string</p>
-      <Dropdown arr={planets} />
+        <p>Select a destination planet</p>
+        <Dropdown
+          arr={planets}
+          name={"planet2"}
+          setData={setData}
+          data={data}
+        />
 
-      <p>planet2 string</p>
-      <Dropdown arr={planets} />
-
-      <p>speed double</p>
-      <input type="text" placeholder="speed"></input>
-
-      <p>speedUnit string</p>
-      <Dropdown arr={speedUnit} />
+        <p>How fast are we going?</p>
+        <input type="text" placeholder="speed"></input>
+        <Dropdown
+          arr={speedUnit}
+          name={"speedUnit"}
+          setData={setData}
+          data={data}
+        />
+        <input type="submit" value="Calculate!"></input>
+      </form>
     </div>
   );
 }
