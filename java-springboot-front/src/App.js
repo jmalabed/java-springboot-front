@@ -6,7 +6,8 @@ function App() {
   const [data, setData] = useState({
     planet1: "",
     planet2: "",
-    speedUnit: "",
+    speedUnit: "m/s",
+    speed: "",
   });
   const planets = [
     "Pick one!",
@@ -21,14 +22,29 @@ function App() {
   ];
   const speedUnit = ["m/s", "mph", "km/s"];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted");
+    // console.log("submitted");
+    try {
+      const fetchedCalc = await fetch(
+        `https://java-space-calculator.herokuapp.com/planetCalc?planet1=${data.planet1}&planet2=${data.planet2}&speed=${data.speed}&speedUnit=${data.speedUnit}`
+      );
+      const parsedCalc = await fetchedCalc.json();
+      console.log(parsedCalc);
+      // response in DAYS
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleChange = (e) => {
+    // console.log(e.target.name, e.target.value);
+    setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
   };
 
   return (
     <div className="App">
-      <p>new App</p>
       <h1>Space Travel</h1>
       <form onSubmit={handleSubmit}>
         <p>Select a planet to start from:</p>
@@ -48,7 +64,13 @@ function App() {
         />
 
         <p>How fast are we going?</p>
-        <input type="text" placeholder="speed"></input>
+        <input
+          type="number"
+          placeholder="speed"
+          name="speed"
+          onChange={handleChange}
+          value={data.speed}
+        ></input>
         <Dropdown
           arr={speedUnit}
           name={"speedUnit"}
