@@ -74,7 +74,15 @@ input {
 
 .planet {
   width: 25%;
-  margin: 0 100px;
+  height: 25%;
+  margin: 100px;
+}
+
+#planet1saturn,
+#planet2saturn {
+  background-color: red;
+  position: inline;
+  width: 50%;
 }
 
 .rocketSpacer {
@@ -82,4 +90,5 @@ input {
 }
 
 .time {
+  margin-top: 20px;
 }

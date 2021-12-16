@@ -66,37 +66,45 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsHidden(false);
+    checkInput();
     fetchCalc();
   };
 
   const handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
+    // console.log(data);
   };
 
   const timeToTravel = () => {
     if (travelTime !== "") {
-      return <p className="time text">{travelTime.time} DAYS</p>;
+      return <h2 className="time text">{travelTime.time} DAYS</h2>;
     }
   };
 
   const rocketLoader = () => {
     if (!isHidden) {
       return (
-        <img
-          src={rocketrocketrocketship}
-          id="rocketImg"
-          className="rocketrocketrocketship"
-          alt="rocketship space travel"
-        />
-      );
-    } else if (isHidden) {
-      return (
         <div className="rocketSpacer">
-          <br />
+          <img
+            src={rocketrocketrocketship}
+            id="rocketImg"
+            className="rocketrocketrocketship"
+            alt="rocketship space travel"
+          />
         </div>
       );
+    } else if (isHidden) {
+      return <div className="rocketSpacer"></div>;
+    }
+  };
+
+  const checkInput = () => {
+    if (data.planet1 === data.planet2) {
+      console.log(`planet2${planets[planets.indexOf(data.planet1)]}`);
+      alert("Please pick two different planets.");
+      setIsHidden(true);
+      return;
     }
   };
 
@@ -104,10 +112,6 @@ function App() {
   useEffect(() => {
     fetchCalc();
   }, []);
-
-  useEffect(() => {
-    rocketLoader();
-  }, [isHidden]);
 
   return (
     <div className="App">
@@ -154,10 +158,12 @@ function App() {
           <img
             src={planetImg[planets.indexOf(data.planet1)]}
             className="planet"
+            id={`planet1${planets[planets.indexOf(data.planet1)]}`}
           />
           <img
             src={planetImg[planets.indexOf(data.planet2)]}
             className="planet"
+            id={`planet2${planets[planets.indexOf(data.planet2)]}`}
           />
         </div>
       </Container>
