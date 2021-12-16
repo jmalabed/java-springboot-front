@@ -20,7 +20,7 @@ function App() {
   });
   const [travelTime, setTravelTime] = useState("");
   const [isCalculating, setIsCalculating] = useState(false);
-
+  const [isHidden, setIsHidden] = useState(true);
   const planets = [
     "Pick one!",
     "mercury",
@@ -58,13 +58,14 @@ function App() {
       // response in DAYS
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsHidden(true);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    document.getElementById("rocketImg").classList.toggle("hidden");
-    // console.log("submitted");
+    setIsHidden(false);
     fetchCalc();
   };
 
@@ -76,28 +77,43 @@ function App() {
 
   const timeToTravel = () => {
     if (travelTime !== "") {
-      return <p>{travelTime.time} DAYS</p>;
-    } else {
+      return <p className="time text">{travelTime.time} DAYS</p>;
+    }
+  };
+
+  const rocketLoader = () => {
+    if (!isHidden) {
       return (
         <img
           src={rocketrocketrocketship}
           id="rocketImg"
-          className="rocketrocketrocketship hidden"
+          className="rocketrocketrocketship"
           alt="rocketship space travel"
         />
+      );
+    } else if (isHidden) {
+      return (
+        <div className="rocketSpacer">
+          <br />
+        </div>
       );
     }
   };
 
+  // run fetch calc on page load to get faster response from heroku!
   useEffect(() => {
     fetchCalc();
   }, []);
 
+  useEffect(() => {
+    rocketLoader();
+  }, [isHidden]);
+
   return (
     <div className="App">
-      <h1>Space Travel</h1>
+      <h1 className="text">Space Travel</h1>
       <form onSubmit={handleSubmit}>
-        <p>Select a planet to start from:</p>
+        <p className="text">Select a planet to start from:</p>
         <Dropdown
           arr={planets}
           name={"planet1"}
@@ -105,7 +121,7 @@ function App() {
           data={data}
         />
 
-        <p>Select a destination planet</p>
+        <p className="text">Select a destination planet</p>
         <Dropdown
           arr={planets}
           name={"planet2"}
@@ -113,7 +129,7 @@ function App() {
           data={data}
         />
 
-        <p>How fast are we going?</p>
+        <p className="text">How fast are we going?</p>
         <input
           type="number"
           placeholder="speed"
@@ -132,6 +148,7 @@ function App() {
         <input type="submit" value="Calculate!" className="button"></input>
       </form>
       {timeToTravel()}
+      {rocketLoader()}
       <Container>
         <div className="d-flex justify-content-center">
           <img

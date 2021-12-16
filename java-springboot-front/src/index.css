@@ -10,9 +10,9 @@ body {
   color: #f0e68c;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.text {
+  color: #f0e68c;
+  font-family: "Space Mono", monospace;
 }
 
 select {
@@ -34,23 +34,27 @@ select {
 .rocketrocketrocketship {
   width: 100px;
   position: relative;
-  transform: translateX(-100px), rotate(-23deg);
+  transform: translateX(-100px) rotate(-23deg);
   animation-name: blastoff;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
-.hidden {
-  display: none;
-}
-
 @keyframes blastoff {
-  from {
-    margin-left: -18%;
+  0% {
+    margin-left: -25%;
+    margin-bottom: 0;
   }
-  to {
+  50% {
+    margin-bottom: 50px;
+    margin-left: 37.5%;
+    transform: rotate(67deg);
+  }
+  100% {
     margin-left: 50%;
+    transform: rotate(-23deg);
+    margin-bottom: 0;
   }
 }
 
@@ -71,4 +75,11 @@ input {
 .planet {
   width: 25%;
   margin: 0 100px;
+}
+
+.rocketSpacer {
+  height: 146px;
+}
+
+.time {
 }
