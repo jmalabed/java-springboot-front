@@ -9,11 +9,11 @@ const Dropdown = (props) => {
   });
 
   return (
-    <div>
+    <>
       <select name={props.name} onChange={handleChange}>
         {selections}
       </select>
-    </div>
+    </>
   );
 };
 export default Dropdown;
